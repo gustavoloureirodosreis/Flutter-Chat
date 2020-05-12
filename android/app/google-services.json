@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "460657850028",
+    "firebase_url": "https://nene-nene-3.firebaseio.com",
+    "project_id": "nene-nene-3",
+    "storage_bucket": "nene-nene-3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460657850028:android:e2e6c8fa4fea9c2ebf9109",
+        "android_client_info": {
+          "package_name": "com.yumegaia.nenenene3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460657850028-inrhn8knob5ksh93k42p4jqk317f859a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeAD45vBQGlTke4e53OzrfGtqHvd1DgKQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "460657850028-inrhn8knob5ksh93k42p4jqk317f859a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
