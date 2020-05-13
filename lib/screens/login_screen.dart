@@ -85,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  // É AQUI QUE SUBMIT LOGIN OU SIGNUP
   _submit() async {
     final authService = Provider.of<AuthService>(context, listen: false);
     try {
@@ -127,10 +128,11 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Welcome!',
+              'Nene Nene!',
               style: TextStyle(
                 fontSize: 30.0,
                 fontWeight: FontWeight.w600,
+                color: Color.fromRGBO(81, 214, 255, 1)
               ),
             ),
             const SizedBox(height: 10.0),
