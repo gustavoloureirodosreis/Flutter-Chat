@@ -100,6 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final String currentUserId =
         Provider.of<UserData>(context, listen: false).currentUserId;
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.exit_to_app),

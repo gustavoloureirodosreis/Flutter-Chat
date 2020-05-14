@@ -26,6 +26,7 @@ class _SearchUsersScreenState extends State<SearchUsersScreen> {
     final currentUserId =
         Provider.of<UserData>(context, listen: false).currentUserId;
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Text('Search Users'),
         actions: <Widget>[

@@ -79,6 +79,7 @@ class _CreateChatScreenState extends State<CreateChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Text('Create Chat'),
       ),

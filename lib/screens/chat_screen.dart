@@ -159,6 +159,7 @@ class _ChatScreenState extends State<ChatScreen> {
         return Future.value(true);
       },
       child: Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
           title: Text(widget.chat.name),
         ),
