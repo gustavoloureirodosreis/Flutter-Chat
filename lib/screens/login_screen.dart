@@ -123,17 +123,15 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'Nene Nene!',
-              style: TextStyle(
-                fontSize: 30.0,
-                fontWeight: FontWeight.w600,
-                color: Color.fromRGBO(81, 214, 255, 1)
-              ),
+            Image(
+              image: AssetImage('assets/logo.png'),
+              width: 200,
+              height: 200,
             ),
             const SizedBox(height: 10.0),
             Row(
@@ -145,12 +143,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    color: _selectedIndex == 0 ? Colors.blue : Colors.grey[300],
+                    color: _selectedIndex == 0 ? Theme.of(context).primaryColor : Colors.grey[300],
                     child: Text(
                       'Login',
                       style: TextStyle(
                         fontSize: 20.0,
-                        color: _selectedIndex == 0 ? Colors.white : Colors.blue,
+                        color: _selectedIndex == 0 ? Colors.white : Theme.of(context).primaryColor,
                       ),
                     ),
                     onPressed: () => setState(() => _selectedIndex = 0),
@@ -162,12 +160,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    color: _selectedIndex == 1 ? Colors.blue : Colors.grey[300],
+                    color: _selectedIndex == 1 ? Theme.of(context).primaryColor : Colors.grey[300],
                     child: Text(
                       'Sign Up',
                       style: TextStyle(
                         fontSize: 20.0,
-                        color: _selectedIndex == 1 ? Colors.white : Colors.blue,
+                        color: _selectedIndex == 1 ? Colors.white : Theme.of(context).primaryColor,
                       ),
                     ),
                     onPressed: () => setState(() => _selectedIndex = 1),
@@ -183,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                color: Colors.blue,
+                color: Theme.of(context).primaryColor,
                 child: Text(
                   'Submit',
                   style: TextStyle(

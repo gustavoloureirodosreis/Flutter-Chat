@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_chat/models/user_data.dart';
 import 'package:firebase_chat/screens/home_screen.dart';
@@ -37,7 +36,8 @@ class MyApp extends StatelessWidget {
       title: 'Nene Nene',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.blue,
+        backgroundColor: Color(0xFFFFFDE9),
+        primaryColor: Color.fromRGBO(81, 214, 255, 1),
       ),
       home: StreamBuilder<FirebaseUser>(
         stream: Provider.of<AuthService>(context, listen: false).user,
