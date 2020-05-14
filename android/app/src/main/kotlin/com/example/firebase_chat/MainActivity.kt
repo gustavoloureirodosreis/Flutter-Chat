@@ -1,4 +1,4 @@
-package com.example.firebase_chat
+package com.yumegaia.nenenene4
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
