@@ -105,35 +105,37 @@ exports.addChatMessage = functions.firestore
 // Learned from: https://medium.com/firebase-developers/how-to-schedule-a-cloud-function-to-run-in-the-future-in-order-to-build-a-firestore-document-ttl-754f9bf3214a
 exports.futurePushCallback =
 functions.https.onRequest(async (req, res) => {
-    const payload = req.body
-    try {
+  try {
+      const payloadOriginal = req.body
       // Sends delayed notification
-        const chatData = payload.chatData
-        const messageData = payload.messageData
-        const memberInfo = chatData.memberInfo;
-        const senderId = messageData.senderId;
-        body += 'A delayed message from ' + memberInfo[senderId].name + ' arrived to you!';
+      const chatData = payloadOriginal.chatData
+      const messageData = payloadOriginal.messageData
+      const memberInfo = chatData.memberInfo;
+      const senderId = messageData.senderId;
+
+      let body = '';
+      body += 'A delayed message from ' + memberInfo[senderId].name + ' arrived to you!';
   
-        const payload = {
-          notification: {
-            title: chatData['name'],
-            body: body
-          }
-        };
-        const options = {
-          priority: 'high',
-          timeToLive: 60 * 60 * 24
-        };
-  
-        for (const userId in memberInfo) {
-          if (userId !== senderId) {
-            const token = memberInfo[userId].token;
-            if (token !== '') {
-              admin.messaging().sendToDevice(token, payload, options);
-            }
+      const payload = {
+        notification: {
+          title: chatData['name'],
+          body: body
+        }
+      };
+      const options = {
+        priority: 'high',
+        timeToLive: 60 * 60 * 24
+      };
+
+      for (const userId in memberInfo) {
+        if (userId !== senderId) {
+          const token = memberInfo[userId].token;
+          if (token !== '') {
+            admin.messaging().sendToDevice(token, payload, options);
           }
         }
-        res.send(200)
+      }
+      res.send(200)
     }
     catch (error) {
         console.error(error)
