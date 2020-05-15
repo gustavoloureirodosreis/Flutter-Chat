@@ -102,6 +102,7 @@ exports.addChatMessage = functions.firestore
   }
 );
 
+// Learned from: https://medium.com/firebase-developers/how-to-schedule-a-cloud-function-to-run-in-the-future-in-order-to-build-a-firestore-document-ttl-754f9bf3214a
 exports.futurePushCallback =
 functions.https.onRequest(async (req, res) => {
     const payload = req.body

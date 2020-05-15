@@ -79,7 +79,7 @@ class MessageBubble extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: message.delayed
-                      ? Color.fromRGBO(255, 237, 200, 1)
+                      ? Color(0xFFBF9000)
                       : message.imageUrl == null
                           ? isMe ? Colors.lightBlue : Colors.green[400]
                           : Colors.transparent,
