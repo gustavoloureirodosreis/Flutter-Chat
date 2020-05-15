@@ -35,6 +35,7 @@ exports.addChatMessage = functions.firestore
       });
 
       // Notifications
+      // TODO: IF MESSAGEDATA.TIMESTAMP MAIOR QUE DATETIME.NOW, NÃO ROLAR
       const memberInfo = chatData.memberInfo;
       const senderId = messageData.senderId;
       let body = memberInfo[senderId].name;

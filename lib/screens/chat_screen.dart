@@ -184,6 +184,7 @@ class _ChatScreenState extends State<ChatScreen> {
       stream: chatsRef
           .document(widget.chat.id)
           .collection('messages')
+          .where('timestamp', isLessThan: Timestamp.fromDate(DateTime.now()))
           .orderBy('timestamp', descending: true)
           .limit(20)
           .snapshots(),
