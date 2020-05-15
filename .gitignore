@@ -40,3 +40,4 @@ android/app/google-services.json
 .firebaserc
 key.jks
 android/key.properties
+node_modules/
