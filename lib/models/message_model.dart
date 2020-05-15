@@ -6,6 +6,7 @@ class Message {
   final String text;
   final String imageUrl;
   final Timestamp timestamp;
+  final bool delayed;
 
   Message({
     this.id,
@@ -13,6 +14,7 @@ class Message {
     this.text,
     this.imageUrl,
     this.timestamp,
+    this.delayed
   });
 
   factory Message.fromDoc(DocumentSnapshot doc) {
@@ -22,6 +24,7 @@ class Message {
       text: doc['text'],
       imageUrl: doc['imageUrl'],
       timestamp: doc['timestamp'],
+      delayed: doc['delayed'] ?? false,
     );
   }
 }

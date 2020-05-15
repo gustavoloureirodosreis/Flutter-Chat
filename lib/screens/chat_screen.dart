@@ -76,9 +76,26 @@ class _ChatScreenState extends State<ChatScreen> {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 4.0),
             child: IconButton(
+              icon: Icon(Icons.timer,
+                  color: _isComposingMessage
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey[300]),
+              onPressed: _isComposingMessage
+                  ? () => _askWhenToSend(
+                        _messageController.text,
+                        null,
+                      )
+                  : null,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: IconButton(
               icon: Icon(
                 Icons.send,
-                color: Theme.of(context).primaryColor,
+                color: _isComposingMessage
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey[300],
               ),
               onPressed: _isComposingMessage
                   ? () => _sendMessage(
@@ -93,7 +110,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  _sendMessage(String text, String imageUrl) async {
+  _sendMessage(String text, String imageUrl, {String daysDelay = '0'}) async {
     if ((text != null && text.trim().isNotEmpty) || imageUrl != null) {
       if (imageUrl == null) {
         // Text Message
@@ -104,10 +121,62 @@ class _ChatScreenState extends State<ChatScreen> {
         senderId: Provider.of<UserData>(context, listen: false).currentUserId,
         text: text,
         imageUrl: imageUrl,
-        timestamp: Timestamp.now(),
+        timestamp: Timestamp.fromDate(
+            DateTime.now().add(Duration(days: int.parse(daysDelay)))),
+        delayed: int.parse(daysDelay) > 0 ? true : false,
       );
       _databaseService.sendChatMessage(widget.chat, message);
     }
+  }
+
+  _askWhenToSend(String text, String imageUrl) {
+    String _dropDownValue = '2';
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(builder: (context, setState) {
+          return AlertDialog(
+            title: Text("How many days from now?"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text("Choose from the dropdown below"),
+                DropdownButton(
+                  value: _dropDownValue,
+                  items: <String>['0', '1', '2', '3']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String newValue) {
+                    setState(() {
+                      _dropDownValue = newValue;
+                    });
+                  },
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("Cancel"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              FlatButton(
+                child: Text("Send"),
+                onPressed: () {
+                  _sendMessage(text, imageUrl, daysDelay: _dropDownValue);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
+      },
+    );
   }
 
   _buildMessagesStream() {

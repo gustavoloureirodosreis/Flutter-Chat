@@ -74,6 +74,7 @@ class DatabaseService {
       'text': message.text,
       'imageUrl': message.imageUrl,
       'timestamp': message.timestamp,
+      'delayed': message.delayed,
     });
   }
 
