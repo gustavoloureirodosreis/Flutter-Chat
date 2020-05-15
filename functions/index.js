@@ -34,38 +34,42 @@ exports.addChatMessage = functions.firestore
         readStatus: readStatus
       });
 
-      // Notifications
-      // TODO: IF MESSAGEDATA.TIMESTAMP MAIOR QUE DATETIME.NOW, NÃO ROLAR
-      const memberInfo = chatData.memberInfo;
-      const senderId = messageData.senderId;
-      let body = memberInfo[senderId].name;
-      if (messageData.text !== null) {
-        body += `: ${messageData.text}`;
-      } else {
-        body += ' sent an image';
-      }
-
-      const payload = {
-        notification: {
-          title: chatData['name'],
-          body: body
+      // Notifications only if it's not a delayed message
+      if(!messageData.delayed) {
+        const memberInfo = chatData.memberInfo;
+        const senderId = messageData.senderId;
+        let body = memberInfo[senderId].name;
+        if (messageData.text !== null) {
+          body += `: ${messageData.text}`;
+        } else {
+          body += ' sent an image';
         }
-      };
-      const options = {
-        priority: 'high',
-        timeToLive: 60 * 60 * 24
-      };
-
-      for (const userId in memberInfo) {
-        if (userId !== senderId) {
-          const token = memberInfo[userId].token;
-          if (token !== '') {
-            admin.messaging().sendToDevice(token, payload, options);
+  
+        const payload = {
+          notification: {
+            title: chatData['name'],
+            body: body
+          }
+        };
+        const options = {
+          priority: 'high',
+          timeToLive: 60 * 60 * 24
+        };
+  
+        for (const userId in memberInfo) {
+          if (userId !== senderId) {
+            const token = memberInfo[userId].token;
+            if (token !== '') {
+              admin.messaging().sendToDevice(token, payload, options);
+            }
           }
         }
       }
     }
   });
+
+// TO-DO: Usar uma functions.pubsub.schedule().onRun() (ver link: https://firebase.google.com/docs/functions/schedule-functions) a cada Xmin
+// Ou, fazer assim: https://medium.com/firebase-developers/how-to-schedule-a-cloud-function-to-run-in-the-future-in-order-to-build-a-firestore-document-ttl-754f9bf3214a
 
 exports.onUpdateUser = functions.firestore
   .document('/users/{userId}')
