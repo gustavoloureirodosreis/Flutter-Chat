@@ -122,7 +122,7 @@ class _ChatScreenState extends State<ChatScreen> {
         text: text,
         imageUrl: imageUrl,
         timestamp: Timestamp.fromDate(
-            DateTime.now().add(Duration(minutes: int.parse(daysDelay)))),
+            DateTime.now().add(Duration(days: int.parse(daysDelay)))),
         delayed: int.parse(daysDelay) > 0 ? true : false,
       );
       _databaseService.sendChatMessage(widget.chat, message);
@@ -136,14 +136,14 @@ class _ChatScreenState extends State<ChatScreen> {
       builder: (context) {
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
-            title: Text("How many minutes from now?"),
+            title: Text("How many days from now?"),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text("Choose from the dropdown below"),
                 DropdownButton(
                   value: _dropDownValue,
-                  items: <String>['0', '1', '2', '3']
+                  items: <String>['1', '2', '3']
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
