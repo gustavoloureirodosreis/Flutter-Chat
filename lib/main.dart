@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
       title: 'Nene Nene',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        dialogBackgroundColor: Color(0xFFFFECA1),
         backgroundColor: Color(0xFFFFFDE9),
         primaryColor: Color.fromRGBO(81, 214, 255, 1),
       ),

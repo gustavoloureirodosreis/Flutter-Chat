@@ -102,22 +102,33 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.exit_to_app),
-          onPressed: Provider.of<AuthService>(context, listen: false).logout,
-        ),
         title: Text('Chats'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => SearchUsersScreen(),
+      ),
+      endDrawer: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: Theme.of(context).backgroundColor,
+        ),
+        child: Drawer(
+          child: ListView(
+            children: <Widget>[
+              ListTile(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => SearchUsersScreen(),
+                  ),
+                ),
+                title: Text("New conversation"),
+                leading: Icon(Icons.add),
               ),
-            ),
+              ListTile(
+                onTap: Provider.of<AuthService>(context, listen: false).logout,
+                title: Text("Logout"),
+                leading: Icon(Icons.exit_to_app),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
       body: StreamBuilder(
         stream: Firestore.instance

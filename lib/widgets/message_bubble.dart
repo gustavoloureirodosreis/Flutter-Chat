@@ -21,7 +21,7 @@ class MessageBubble extends StatelessWidget {
       child: Text(
         message.text,
         style: TextStyle(
-          color: Colors.white,
+          color: message.delayed ? Colors.yellow[800] : Colors.white,
           fontSize: 15.0,
         ),
       ),
@@ -79,7 +79,7 @@ class MessageBubble extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: message.delayed
-                      ? Color(0xFFBF9000)
+                      ? Theme.of(context).dialogBackgroundColor
                       : message.imageUrl == null
                           ? isMe ? Colors.lightBlue : Colors.green[400]
                           : Colors.transparent,

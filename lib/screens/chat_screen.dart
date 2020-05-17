@@ -24,6 +24,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _messageController = TextEditingController();
   bool _isComposingMessage = false;
+  bool _seeFuture = false;
   DatabaseService _databaseService;
 
   @override
@@ -180,14 +181,22 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   _buildMessagesStream() {
+    CollectionReference halfQuery =
+        chatsRef.document(widget.chat.id).collection('messages');
     return StreamBuilder(
-      stream: chatsRef
-          .document(widget.chat.id)
-          .collection('messages')
-          .where('timestamp', isLessThan: Timestamp.fromDate(DateTime.now()))
-          .orderBy('timestamp', descending: true)
-          .limit(20)
-          .snapshots(),
+      stream: !_seeFuture
+          ? halfQuery
+              .where('timestamp',
+                  isLessThan: Timestamp.fromDate(DateTime.now()))
+              .orderBy('timestamp', descending: true)
+              .limit(20)
+              .snapshots()
+          : halfQuery
+              .where('timestamp',
+                  isGreaterThan: Timestamp.fromDate(DateTime.now()))
+              .orderBy('timestamp', descending: true)
+              .limit(20)
+              .snapshots(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return SizedBox.shrink();
@@ -231,7 +240,35 @@ class _ChatScreenState extends State<ChatScreen> {
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
-          title: Text(widget.chat.name),
+          title: Text(
+            widget.chat.name,
+            style: TextStyle(color: Colors.blue[800]),
+          ),
+          actions: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Row(children: <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.update,
+                    color: Colors.blue[800],
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _seeFuture = !_seeFuture;
+                      print('cliquei nessa porra!' + _seeFuture.toString());
+                    });
+                  },
+                ),
+                Text(
+                  _seeFuture ? "See present" : "See future",
+                  style: TextStyle(
+                    color: Colors.blue[800],
+                  ),
+                )
+              ]),
+            )
+          ],
         ),
         body: SafeArea(
           child: Column(
